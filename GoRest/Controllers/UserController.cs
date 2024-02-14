@@ -43,11 +43,6 @@ namespace GoRest.Controllers
         {
             User user = await GetUserByIdFromApi(id);
 
-            if (user == null)
-            {
-                return NotFound();
-            }
-
             return View(user);
         }
 
@@ -74,10 +69,6 @@ namespace GoRest.Controllers
         {
             User user = await GetUserByIdFromApi(id);
 
-            if (user == null)
-            {
-                return NotFound();
-            }
             await DeleteUserInApi(id);
             return RedirectToAction("Index");
         }
@@ -127,18 +118,25 @@ namespace GoRest.Controllers
         private async Task<User> GetUserByIdFromApi(int id)
         {
             string apiUrl = $"https://gorest.co.in/public/v2/users/{id}";
-            HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
 
-            if (response.IsSuccessStatusCode)
+            using (var client = new HttpClient())
             {
-                string responseData = await response.Content.ReadAsStringAsync();
-                User user = JsonConvert.DeserializeObject<User>(responseData);
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer 0dc61835f2071460be8907dfb48b7344adbad42d8f17d3f9c8531d3b8599e878");
 
-                return user;
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseData = await response.Content.ReadAsStringAsync();
+                    User user = JsonConvert.DeserializeObject<User>(responseData);
+
+                    return user;
+                }
+
+                return null;
             }
-
-            return null;
         }
+
         private async Task UpdateUserInApi(User user)
         {
             string apiUrl = $"https://gorest.co.in/public/v2/users/{user.id}";
