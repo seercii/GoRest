@@ -1,0 +1,45 @@
+﻿@model GoRest.Models.CreateUser
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Kullanıcı Oluştur</h2>
+
+<form asp-action="Create">
+   @*  <div class="form-group">
+        <label asp-for="Id"></label>
+        <input asp-for="Id" class="form-control" />
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div> *@
+    <div class="form-group">
+        <label asp-for="name"></label>
+        <input asp-for="name" class="form-control" />
+        <span asp-validation-for="name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="email"></label>
+        <input asp-for="email" class="form-control" />
+        <span asp-validation-for="email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="gender"></label>
+        <input asp-for="gender" class="form-control" />
+        <span asp-validation-for="gender" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="status"></label>
+        <input asp-for="status" class="form-control" />
+        <span asp-validation-for="status" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+

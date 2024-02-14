@@ -1,0 +1,48 @@
+﻿@model List<User>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h1>Kullanıcılar</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Yeni Kullanıcı Oluştur</a>
+    </p>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">İsim</th>
+                <th scope="col">Email</th>
+                <th scope="col">Cinsiyet</th>
+                <th scope="col">Statü</th>
+                <th scope="col">Güncelle</th>
+                <th scope="col">Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.id</td>
+                    <td>@user.name</td>
+                    <td>@user.email</td>
+                    <td>@user.gender</td>
+                    <td>@user.status</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@user.id">Güncelle</a>
+                    </td>
+                    <td>
+                        <form asp-action="Delete" asp-controller="User" method="post">
+                            <input type="hidden" name="id" value="@user.id" />                          
+                            <button type="submit" class="btn btn-danger">Sil</button>
+                        </form>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
